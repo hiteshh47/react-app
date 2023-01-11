@@ -1,0 +1,17 @@
+name: CI
+on: 
+  pull_request:
+    branches: [develop]
+
+jobs:
+  job-develop:
+    runs-on: ubuntu-latest  
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dep
+        run: |
+          npm ci
+          npm run format:check
+          npm test -- --coverage
+        env:
+         CI: true
