@@ -38,8 +38,8 @@ jobs:
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Deploy to staging
+
+      - name: Deploy to staging test
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain elegant-fairies.surge.sh
         env:
