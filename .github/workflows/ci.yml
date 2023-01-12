@@ -7,7 +7,7 @@ on:
 
 jobs:
   job-develop:
-    runs-on: ubuntu-latest  
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Install dep
@@ -18,9 +18,20 @@ jobs:
       - run: npm test -- --coverage
         env:
          CI: true
+      - name: Upload Test coverage  
+        uses: actions/upload-artifact@v1
+        with:
+          name: test-coverage
+          path: coverage
       - name: Build Project
         if: github.event_name == 'push'
         run: npm run build
+      - name: Upload Build coverage
+        if: github.event_name == 'push' 
+        uses: actions/upload-artifact@v1
+        with:
+          name: build-coverage
+          path: build
       - name: Deploy to staging
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain elegant-fairies.surge.sh
