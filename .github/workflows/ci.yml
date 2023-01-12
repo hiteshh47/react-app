@@ -30,6 +30,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: build-coverage
+          if: github.event_name == 'push'
           path: build
       - name: Deploy to staging
         if: github.event_name == 'push'
