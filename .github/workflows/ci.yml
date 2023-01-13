@@ -8,6 +8,9 @@ on:
 jobs:
   job-develop:
     runs-on: ubuntu-latest
+    env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
     steps:
       - uses: actions/checkout@v2
       - name: Install dep
@@ -33,16 +36,13 @@ jobs:
           name: build-coverage
           path: build
 
-      - name: Create a release test
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: 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
-
-      - name: Deploy to staging test1
+      - name: Deploy to staging test
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain elegant-fairies.surge.sh
-        env:
-          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
-          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
+
+
+      - name: Deploy to Production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: npx surge --project ./build --domain workable-dad.surge.sh
+
 
