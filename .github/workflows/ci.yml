@@ -39,7 +39,7 @@ jobs:
         env:
           GITHUB_TOKEN: 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
 
-      - name: Deploy to staging test
+      - name: Deploy to staging test1
         if: github.event_name == 'push'
         run: npx surge --project ./build --domain elegant-fairies.surge.sh
         env:
