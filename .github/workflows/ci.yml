@@ -33,7 +33,7 @@ jobs:
           name: build-coverage
           path: build
 
-      - name: Create a release
+      - name: Create a release test
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: npx semantic-release
         env:
